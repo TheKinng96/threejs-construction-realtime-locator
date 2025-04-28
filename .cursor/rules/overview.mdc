@@ -1,6 +1,13 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+After each task, should update the todo.md
+
 ## 1. Overview
 
-Earthbrain's core value is real-time, 3D visualization of on-site activity. This MVP replicates that by showing:
+Earthbrain’s core value is real-time, 3D visualization of on-site activity. This MVP replicates that by showing:
 
 - A Three.js scene of the construction area.
 - Live updates of simulated users (workers, vehicles) via WebSockets.
@@ -11,25 +18,7 @@ Earthbrain's core value is real-time, 3D visualization of on-site activity. This
 - **Simulate** on-site users sending location/status in real time.
 - **Evaluate** a simple, maintainable tech stack (framework or plain HTML) for MVP.
 
-## 3. Project Structure
-
-```
-src/
-├── lib/                    # Shared components and utilities
-│   ├── constructionView/   # Construction site 3D visualization
-│   │   ├── ConstructionView.svelte
-│   │   └── components/     # Sub-components for the construction view
-│   │       ├── Ground.svelte
-│   │       ├── Markers.svelte
-│   │       └── Controls.svelte
-│   └── utils/             # Utility functions and helpers
-├── routes/                # SvelteKit routes
-│   ├── +page.svelte      # Main construction view
-│   └── simulate/         # Simulation control page
-└── app.css               # Global styles
-```
-
-## 4. MVP Feature List
+## 3. MVP Feature List
 
 1. **3D Construction View**
    - Orbit controls for zoom / rotate / pan.
@@ -40,42 +29,42 @@ src/
 3. **Excavation Detection for Digging Machines**
    - Interpret z-axis changes: when a digging machine marker lowers below ground (z decreases), visualize excavation levels (e.g., floor –1).
 
-## 5. Pages & Flows
+## 4. Pages & Flows
 
-### 5.1 Construction Area Page (`/`)
+### 4.1 Construction Area Page (`/`)
 
 - **Three.js scene**: ground plane + placeholder structures.
 - **Markers**: dots or basic meshes representing trucks/workers.
 - **Interactions**:
   - `OrbitControls` for camera navigation.
-  - Raycasting for pointer events: click to show a tooltip (e.g., "Worker A: 2nd floor").
+  - Raycasting for pointer events: click to show a tooltip (e.g., “Worker A: 2nd floor”).
 - **Data**:
   - On load: fetch all active points/users.
   - Subscribe to real-time updates via WebSocket or backend service.
 
-### 5.2 Simulation Control Page (`/simulate`)
+### 4.2 Simulation Control Page (`/simulate`)
 
 - **UI form**: choose entity type (worker/truck), initial coords, status.
 - **Controls**:
-  - Buttons to move entities (e.g., "move up floor", "drive forward").
+  - Buttons to move entities (e.g., “move up floor”, “drive forward”).
 - **Data flow**:
   - Send updates through WebSocket to backend.
   - Backend broadcasts to all clients.
 
-## 6. Tech Stack
+## 5. Tech Stack
 
 - **Frontend**:
   - Option A: **SvelteKit** + Three.js
   - Option B: **Plain HTML/JavaScript** + Three.js
 - **Realtime Backend**: PocketBase (built-in WebSocket) or SpacetimeDB
-- **Database**: SQLite (via PocketBase) or SpacetimeDB's engine
+- **Database**: SQLite (via PocketBase) or SpacetimeDB’s engine
 - **Hosting**:
   - Frontend: Vercel, GitHub Pages, or static web server
   - Backend: DigitalOcean droplet, Heroku free tier, or self-hosted
 
 > _Rationale_: Both SvelteKit and plain HTML setups can render Three.js. PocketBase offers zero-backend overhead, while SpacetimeDB adds advanced real-time tools if needed.
 
-## 7. Data Model
+## 6. Data Model
 
 Each construction site has its own 3D map definition, stored in a `maps` collection so the environment geometry and metadata can be loaded dynamically.
 
@@ -116,14 +105,14 @@ Each construction site has its own 3D map definition, stored in a `maps` collect
 }
 ```
 
-## 8. Real-Time Data Flow
+## 7. Real-Time Data Flow
 
 - Client connects to backend WebSocket.
 - Subscribes to points and users channels.
 - On record change (create/update), server emits an event.
 - Frontend handler updates Three.js objects accordingly.
 
-## 9. Implementation Roadmap & TODOs
+## 8. Implementation Roadmap & TODOs
 
 **Week 1: Project Setup & Core Scene**  
 Deliverable: Scaffold project, load Three.js scene, and generate map geometry from basic shapes.
@@ -168,20 +157,16 @@ Deliverable: Build simulation page and end-to-end QA.
 - Conduct cross-browser and multi-tab tests.
 - Prepare deployment scripts.
 
-## 10. Timeline & Milestones
+## 9. Timeline & Milestones
 
 - **Week 1:** Project Setup & Core Scene
 - **Week 2:** Backend & Data Fetch
 - **Week 3:** Real-Time Integration
 - **Week 4:** Simulation UI & Testing
 
-## 11. Future Enhancements
+## 10. Future Enhancements
 
 - Evaluate advanced features of SpacetimeDB for peer-to-peer syncing.
 - Add authentication & role-based access (admin vs. viewer).
 - Integrate GIS maps or BIM models for realistic site layouts.
 - Extend to mobile-optimized controls and touch gestures.
-
-```
-
-```

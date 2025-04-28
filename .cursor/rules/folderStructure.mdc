@@ -1,0 +1,18 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+src/
+├── lib/                    # Shared components and utilities
+│   ├── threeScene/         # Three.js scene components
+│   │   ├── ThreeScene.svelte
+│   │   └── components/     # Sub-components for the scene
+│   │       ├── Ground.svelte
+│   │       ├── Markers.svelte
+│   │       └── Controls.svelte
+│   └── utils/             # Utility functions and helpers
+├── routes/                # SvelteKit routes
+│   ├── +page.svelte      # Main construction view
+│   └── simulate/         # Simulation control page
+└── app.css               # Global styles

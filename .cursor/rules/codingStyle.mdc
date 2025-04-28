@@ -1,0 +1,7 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Use tailwindCSS version 4
+Only define custom CSS if really need to

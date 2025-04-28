@@ -8,6 +8,10 @@ declare global {
 		// interface PageState {}
 		// interface Platform {}
 	}
+
+	interface ImportMetaEnv {
+		VITE_POCKETBASE_URL: string;
+	}
 }
 
 export {};

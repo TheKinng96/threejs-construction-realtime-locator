@@ -2,12 +2,15 @@
 	import { onMount } from 'svelte';
 	import * as THREE from 'three';
 	import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+	import { mockMap } from '$lib/utils/mockData';
+	import Map from './components/Map.svelte';
 
 	let container: HTMLDivElement;
 	let scene: THREE.Scene;
 	let camera: THREE.PerspectiveCamera;
 	let renderer: THREE.WebGLRenderer;
 	let controls: OrbitControls;
+	const map = mockMap;
 
 	onMount(() => {
 		// Initialize scene
@@ -16,7 +19,7 @@
 
 		// Initialize camera
 		camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-		camera.position.set(5, 5, 5);
+		camera.position.set(50, 50, 50);
 		camera.lookAt(0, 0, 0);
 
 		// Initialize renderer
@@ -36,23 +39,6 @@
 		const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
 		directionalLight.position.set(1, 1, 1);
 		scene.add(directionalLight);
-
-		// Add ground plane
-		const groundGeometry = new THREE.PlaneGeometry(10, 10);
-		const groundMaterial = new THREE.MeshStandardMaterial({
-			color: 0x999999,
-			side: THREE.DoubleSide
-		});
-		const ground = new THREE.Mesh(groundGeometry, groundMaterial);
-		ground.rotation.x = -Math.PI / 2;
-		scene.add(ground);
-
-		// Add a test box
-		const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
-		const boxMaterial = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
-		const box = new THREE.Mesh(boxGeometry, boxMaterial);
-		box.position.set(0, 0.5, 0);
-		scene.add(box);
 
 		// Handle window resize
 		const handleResize = () => {
@@ -77,4 +63,8 @@
 	});
 </script>
 
-<div bind:this={container} class="fixed top-0 left-0 h-full w-full"></div>
+<div bind:this={container} class="fixed top-0 left-0 h-screen w-full">
+	{#if scene}
+		<Map {map} {scene} />
+	{/if}
+</div>
